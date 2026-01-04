@@ -21,8 +21,8 @@ const { title, description, author, categories, image, date, tags } = post.data;
 
 <section class="section pt-7">
   <div class="container">
-    <div class="row justify-center">
-      <article class="lg:col-8">
+    <div class="row justify-center flex flex-col lg:flex-row">
+      <article class="lg:col-8 order-2 lg:order-1">
         {
           image && (
             <div class="mb-10">
@@ -94,8 +94,8 @@ const { title, description, author, categories, image, date, tags } = post.data;
          </div>
          <Disqus className="mt-20" client:load />
        </article>
-       <aside class="lg:col-4">
-         <div class="sticky top-16 max-h-[calc(100vh-9rem)] overflow-y-auto pt-4">
+       <aside class="lg:col-4 order-1 lg:order-2">
+         <div class="lg:sticky lg:top-16 max-h-[calc(100vh-9rem)] overflow-y-auto pt-4 lg:pt-4 pt-0">
            <h5 class="mt-4 mb-4 text-lg font-semibold">Table of Contents</h5>
            <nav id="toc" class="toc"></nav>
          </div>
