@@ -86,3 +86,17 @@
     Header append Vary: Accept-Encoding
   </FilesMatch>
 </IfModule>
+
+##### Blog URL Redirects (old date-prefixed URLs to new clean URLs)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Redirect old blog post URLs with date prefixes to new clean URLs
+  RewriteRule ^blog/2025-04-06-Understanding-Bootstrap-Confidence-Intervals$ /blog/Understanding-Bootstrap-Confidence-Intervals [R=301,L]
+  RewriteRule ^blog/2025-04-12-Hardware-Accelerated-Bootstrapping$ /blog/Hardware-Accelerated-Bootstrapping [R=301,L]
+  RewriteRule ^blog/2025-05-05-Backpropagation:-A-Modern-Explanation$ /blog/Backpropagation-A-Modern-Explanation [R=301,L]
+  RewriteRule ^blog/2025-05-10-Building-an-Autodiff-Library$ /blog/Building-an-Autodiff-Library [R=301,L]
+  RewriteRule ^blog/2025-05-18-A-Deep-Dive-On-Vanishing-and-Exploding-Gradients$ /blog/A-Deep-Dive-On-Vanishing-and-Exploding-Gradients [R=301,L]
+  RewriteRule ^blog/2025-05-25-Understanding-Optimisers-Through-Hessians$ /blog/Understanding-Optimisers-Through-Hessians [R=301,L]
+  RewriteRule ^blog/2026-01-03-A0C-2025-Day-10$ /blog/AOC-2025-Day-10 [R=301,L]
+</IfModule>
