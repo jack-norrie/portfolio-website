@@ -43,7 +43,13 @@ export default defineConfig({
       remarkObsidianCallout,
     ],
     rehypePlugins: [rehypeMathjax],
-    shikiConfig: { theme: "one-dark-pro", wrap: true },
+    shikiConfig: {
+      themes: {
+        light: "catppuccin-latte",
+        dark: "catppuccin-mocha",
+      },
+      wrap: true,
+    },
     extendDefaultPlugins: true,
   },
 });

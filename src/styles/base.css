@@ -54,6 +54,16 @@ code {
   @apply after:border-none;
 }
 
+/* Shiki dual theme support for Catppuccin */
+.dark pre.astro-code {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+
+.dark pre.astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
 blockquote > p {
   @apply my-0!;
 }
