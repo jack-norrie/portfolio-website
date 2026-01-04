@@ -21,8 +21,19 @@ const { title, description, author, categories, image, date, tags } = post.data;
 
 <section class="section pt-7">
   <div class="container">
-    <div class="row justify-center flex flex-col lg:flex-row">
-      <article class="lg:col-8 order-2 lg:order-1">
+    <!-- Mobile ToC Button -->
+    <button
+      id="mobile-toc-btn"
+      class="lg:hidden fixed bottom-6 right-6 z-40 bg-primary text-white dark:bg-darkmode-primary dark:text-text-dark rounded-full p-4 shadow-lg hover:scale-110 transition-transform"
+      aria-label="Toggle Table of Contents"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+      </svg>
+    </button>
+
+    <div class="row justify-center">
+       <article class="lg:col-8">
         {
           image && (
             <div class="mb-10">
@@ -94,41 +105,121 @@ const { title, description, author, categories, image, date, tags } = post.data;
          </div>
          <Disqus className="mt-20" client:load />
        </article>
-       <aside class="lg:col-4 order-1 lg:order-2">
-         <div class="lg:sticky lg:top-16 max-h-[calc(100vh-9rem)] overflow-y-auto pt-4 lg:pt-4 pt-0">
+       
+       <!-- ToC Sidebar -->
+       <aside class="lg:col-4" id="toc-sidebar">
+         <!-- Desktop ToC -->
+         <div class="hidden lg:block sticky top-16 max-h-[calc(100vh-9rem)] overflow-y-auto pt-4">
            <h5 class="mt-4 mb-4 text-lg font-semibold">Table of Contents</h5>
            <nav id="toc" class="toc"></nav>
          </div>
+         
+         <!-- Mobile ToC Panel -->
+         <div id="mobile-toc-panel" class="lg:hidden fixed right-0 top-0 h-full w-80 bg-body dark:bg-darkmode-body z-50 transform translate-x-full transition-transform duration-300 shadow-xl overflow-y-auto">
+           <div class="p-6">
+             <div class="flex justify-between items-center mb-4">
+               <h5 class="text-lg font-semibold">Table of Contents</h5>
+               <button id="close-toc" class="text-2xl" aria-label="Close Table of Contents">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                 </svg>
+               </button>
+             </div>
+             <nav id="toc-mobile" class="toc"></nav>
+           </div>
+         </div>
+         
+         <!-- Mobile ToC Overlay -->
+         <div id="toc-overlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
        </aside>
       </div>
-     <script>
+      <script>
        import tocbot from 'tocbot';
        import 'tocbot/dist/tocbot.css';
 
        function initToc() {
-         // Destroy any existing instance first
+         // Destroy any existing instances first
          tocbot.destroy();
+
+         const commonConfig = {
+           contentSelector: '.content',
+           headingSelector: 'h2, h3',
+           scrollSmooth: true,
+           scrollSmoothDuration: 200,
+           headingsOffset: 140,
+           scrollSmoothOffset: -140,
+           throttleTimeout: 200,
+         };
 
          // Wait a bit for content to be fully rendered
          requestAnimationFrame(() => {
-           tocbot.init({
-             tocSelector: '#toc',
-             contentSelector: '.content',
-             headingSelector: 'h2, h3',
-             scrollSmooth: true,
-             scrollSmoothDuration: 200,
-             headingsOffset: 140,
-             scrollSmoothOffset: -140,
-             throttleTimeout: 200,
-           });
+           // Initialize desktop ToC
+           if (window.innerWidth >= 1024) {
+             tocbot.init({
+               ...commonConfig,
+               tocSelector: '#toc',
+             });
+           } else {
+             // Initialize mobile ToC
+             tocbot.init({
+               ...commonConfig,
+               tocSelector: '#toc-mobile',
+             });
+           }
+         });
+       }
+
+       function initTocToggle() {
+         const mobileBtn = document.getElementById('mobile-toc-btn');
+         const tocPanel = document.getElementById('mobile-toc-panel');
+         const tocOverlay = document.getElementById('toc-overlay');
+         const closeBtn = document.getElementById('close-toc');
+
+         if (!mobileBtn || !tocPanel || !tocOverlay || !closeBtn) return;
+
+         function openToc() {
+           if (tocPanel && tocOverlay) {
+             tocPanel.classList.remove('translate-x-full');
+             tocOverlay.classList.remove('hidden');
+             document.body.style.overflow = 'hidden';
+           }
+         }
+
+         function closeToc() {
+           if (tocPanel && tocOverlay) {
+             tocPanel.classList.add('translate-x-full');
+             tocOverlay.classList.add('hidden');
+             document.body.style.overflow = '';
+           }
+         }
+
+         mobileBtn.addEventListener('click', openToc);
+         closeBtn.addEventListener('click', closeToc);
+         tocOverlay.addEventListener('click', closeToc);
+
+         // Close ToC when clicking on a link
+         const tocLinks = document.querySelectorAll('#toc-mobile a');
+         tocLinks.forEach(link => {
+           link.addEventListener('click', closeToc);
          });
        }
 
        // Initialize on page load
        initToc();
+       initTocToggle();
 
        // Re-initialize on client-side navigation (for Astro view transitions)
-       document.addEventListener('astro:page-load', initToc);
+       document.addEventListener('astro:page-load', () => {
+         initToc();
+         initTocToggle();
+       });
+
+       // Re-initialize on window resize
+       let resizeTimer: ReturnType<typeof setTimeout>;
+       window.addEventListener('resize', () => {
+         clearTimeout(resizeTimer);
+         resizeTimer = setTimeout(initToc, 250);
+       });
      </script>
 
      <!-- Related posts -->
