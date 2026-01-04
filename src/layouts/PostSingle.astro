@@ -137,6 +137,32 @@ const { title, description, author, categories, image, date, tags } = post.data;
        import tocbot from 'tocbot';
        import 'tocbot/dist/tocbot.css';
 
+       // Mark paragraphs that only contain math (for proper centering)
+       function markMathOnlyParagraphs() {
+         const contentDiv = document.querySelector('.content');
+         if (!contentDiv) return;
+
+         const paragraphs = contentDiv.querySelectorAll('p');
+         paragraphs.forEach((p) => {
+           // Get all child nodes
+           const children = Array.from(p.childNodes);
+           
+           // Check if paragraph has exactly one element child and it's an mjx-container
+           const elementChildren = children.filter(node => node.nodeType === Node.ELEMENT_NODE) as Element[];
+           const mjxContainer = elementChildren.find(el => el.tagName === 'MJX-CONTAINER');
+           
+           // Get all text nodes and check if they're only whitespace
+           const textNodes = children.filter(node => node.nodeType === Node.TEXT_NODE);
+           const hasNonWhitespaceText = textNodes.some(node => node.textContent?.trim());
+           
+           // Mark as math-only if: has exactly 1 mjx-container, no other elements, and no non-whitespace text
+           if (elementChildren.length === 1 && mjxContainer && !hasNonWhitespaceText) {
+             p.classList.add('math-only');
+           }
+           p.classList.add('math-checked');
+         });
+       }
+
        function closeTocPanel() {
          const tocPanel = document.getElementById('mobile-toc-panel');
          const tocOverlay = document.getElementById('toc-overlay');
@@ -210,15 +236,19 @@ const { title, description, author, categories, image, date, tags } = post.data;
          tocOverlay.addEventListener('click', closeTocPanel);
        }
 
-       // Initialize on page load
-       initToc();
-       initTocToggle();
+        // Initialize on page load
+        initToc();
+        initTocToggle();
+        
+        // Mark math-only paragraphs after a short delay to ensure MathJax has rendered
+        setTimeout(markMathOnlyParagraphs, 100);
 
-       // Re-initialize on client-side navigation (for Astro view transitions)
-       document.addEventListener('astro:page-load', () => {
-         initToc();
-         initTocToggle();
-       });
+        // Re-initialize on client-side navigation (for Astro view transitions)
+        document.addEventListener('astro:page-load', () => {
+          initToc();
+          initTocToggle();
+          setTimeout(markMathOnlyParagraphs, 100);
+        });
 
        // Re-initialize on window resize
        let resizeTimer: ReturnType<typeof setTimeout>;

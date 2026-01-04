@@ -53,8 +53,18 @@ mjx-container[display="true"] {
 }
 
 /* Center paragraphs that only contain a math equation (display math from $$...$$) */
-.content p:has(> mjx-container:only-child),
-.content p:has(> mjx-container:first-child:last-child) {
+/* We center paragraphs where the math container is the only child AND
+   the paragraph has no meaningful text content (only whitespace).
+   This is done via JavaScript that adds the 'math-only' class. */
+.content p.math-only {
+  text-align: center !important;
+  margin: 1.5em 0 !important;
+}
+
+/* Fallback: If JS hasn't run yet, use :has selector with :only-child.
+   This may occasionally center paragraphs with inline math, but will be
+   corrected once JS runs. */
+.content p:has(> mjx-container:only-child):not(.math-checked) {
   text-align: center !important;
   margin: 1.5em 0 !important;
 }
