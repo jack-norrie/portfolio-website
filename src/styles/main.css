@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin 'tailwind-bootstrap-grid';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Auto-generated theme from "theme.json"*/
+@import "./generated-theme.css";
+
+@import "./safe.css";
+@import "./utilities.css";
+
+@layer base {
+  @import "./base.css";
+}
+
+@layer components {
+  @import "./components.css";
+  @import "./navigation.css";
+  @import "./buttons.css";
+  @import "./search.css";
+}
+
+/* MathJax Math Rendering Styles */
+
+/* Default to inline-block for all mjx-container (inline math) */
+mjx-container {
+  display: inline-block !important;
+  margin: 0 !important;
+  vertical-align: middle !important;
+}
+
+/* Display math blocks (with display="true" attribute) - centered */
+mjx-container[display="true"] {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 1.5em !important;
+  text-align: center !important;
+  width: fit-content !important;
+  color: theme("colors.text.DEFAULT");
+}
+
+/* Dark mode color for display math */
+.dark mjx-container[display="true"] {
+  color: theme("colors.darkmode-text.DEFAULT");
+}
+
+/* Dark mode color for display math */
+.dark mjx-container[display="true"] {
+  color: theme("colors.darkmode-text.DEFAULT");
+}
+
+/* Center paragraphs that only contain a math equation (display math from $$...$$) */
+.content p:has(> mjx-container:only-child),
+.content p:has(> mjx-container:first-child:last-child) {
+  text-align: center !important;
+  margin: 1.5em 0 !important;
+}
+
+/* Center all display math variants */
+.MJXc-display,
+.MathJax_Display,
+.math.display,
+.math-display {
+  text-align: center !important;
+  margin: 1.5em 0 !important;
+}
+
+/* Ensure MathJax containers have proper styling */
+.MJX-TEX {
+  font-size: 1.1em;
+}

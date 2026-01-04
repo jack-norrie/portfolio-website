@@ -1,0 +1,51 @@
+{
+  "site": {
+    "title": "Jack Norrie",
+    "base_url": "https://jack-norrie.github.io",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "",
+    "logo_darkmode": "",
+    "logo_width": "150",
+    "logo_height": "30",
+    "logo_text": "Jack Norrie"
+  },
+  "settings": {
+    "search": true,
+    "sticky_header": true,
+    "theme_switcher": true,
+    "default_theme": "system",
+    "pagination": 4,
+    "summary_length": 200,
+    "blog_folder": "blog"
+  },
+  "announcement": {
+    "enable": false,
+    "content": "",
+    "expire_days": 7
+  },
+  "params": {
+    "contact_form_action": "#",
+    "copyright": "© 2025 Jack Norrie. All rights reserved."
+  },
+  "navigation_button": {
+    "enable": true,
+    "label": "GitHub",
+    "link": "https://github.com/jack-norrie"
+  },
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+  "disqus": {
+    "enable": false,
+    "shortname": "themefisher-template",
+    "settings": {}
+  },
+  "metadata": {
+    "meta_author": "Jack Norrie",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "A personal portfolio website where I showcase articles and projects on machine learning, deep learning, statistics and software engineering."
+  }
+}
