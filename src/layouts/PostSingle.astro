@@ -1,7 +1,7 @@
 ---
 import BlogCard from "@/components/BlogCard.astro";
 import Share from "@/components/Share.astro";
-import Disqus from "@/helpers/Disqus";
+import GiscusComments from "@/helpers/Giscus";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
 import similarItems from "@/lib/utils/similarItems";
@@ -103,7 +103,7 @@ const { title, description, author, categories, image, date, tags } = post.data;
             />
           </div>
          </div>
-         <Disqus className="mt-20" client:load />
+         <GiscusComments className="mt-20" client:load />
        </article>
        
        <!-- ToC Sidebar -->

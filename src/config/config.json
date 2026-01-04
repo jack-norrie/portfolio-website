@@ -38,10 +38,20 @@
     "enable": false,
     "gtm_id": "GTM-XXXXXX"
   },
-  "disqus": {
-    "enable": false,
-    "shortname": "themefisher-template",
-    "settings": {}
+  "giscus": {
+    "enable": true,
+    "repo": "jack-norrie/portfolio-website",
+    "repoId": "R_kgDOQzgYiA",
+    "category": "General",
+    "categoryId": "DIC_kwDOQzgYiM4C0kef",
+    "mapping": "pathname",
+    "strict": "0",
+    "reactionsEnabled": "0",
+    "emitMetadata": "0",
+    "inputPosition": "bottom",
+    "theme": "preferred_color_scheme",
+    "lang": "en",
+    "loading": "lazy"
   },
   "metadata": {
     "meta_author": "Jack Norrie",
