@@ -65,7 +65,7 @@ Therefore, if we want our forwards pass to be stable, i.e. $\mathbb{V}(h^{(l)})=
 
 $$\mathbb{V}(w^{(l)})=\frac{1}{f_{in}^{(l)}} \quad \forall l$$
 
-> Making our derivations in terms of "number of summands", i.e. fan-in, is beneficial because the analysis generalises beyond dense neural networks. For example, to apply the above analysis to a 2D convolutional neural network the "fan*in" is the total kernel area multiplied by the number of input channels, for example this could be $f*{in}=W\times H \times C = 3\times 3 \times 8$.
+> Making our derivations in terms of "number of summands", i.e. fan-in, is beneficial because the analysis generalises beyond dense neural networks. For example, to apply the above analysis to a 2D convolutional neural network the "fan-in" is the total kernel area multiplied by the number of input channels, for example this could be $f_{in}=W\times H \times C = 3\times 3 \times 8$.
 
 #### Node Sensitivity Stability
 

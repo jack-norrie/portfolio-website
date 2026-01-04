@@ -30,7 +30,7 @@ First, lets have a quick refresher on what bootstrapping is. Suppose you have so
 
 This is where the ingenuity of the bootstrap method comes into play. What if instead of using $F$ we used $\hat{F}\_n$? In other words, what if instead of trying to calculate these expected values relative to the unknown distribution, we instead use our empirical distribution associated with adding $\frac{1}{n}$ point masses at each of the data points in the sample. The motivation for this being that, by the Glivenko–Cantelli theorem, $\hat{F}\_n \rightarrow F$.
 
-The power of this approximation is that it means we can estimate the expected values via simulation. The key insight, is that sampling from $\hat{F}\_n$ is the same as resampling our original sample with replacement to generate a new size $n$ sample. We can then use this resampled data $x^\* =(x\_{1, b}^*, x\_{2, b}^\*, \dots, x\_{n, b}^\*)$ to generate a bootstrap replicate of our statistic $\hat{\theta}\_n^\*=t(x^\*)$. If we generate $B$ such bootstrap replicates then, by the law of large numbers, the sample mean of these will converge to the expected value of our statistic under $\hat{F}\_n$.
+The power of this approximation is that it means we can estimate the expected values via simulation. The key insight, is that sampling from $\hat{F}\_n$ is the same as resampling our original sample with replacement to generate a new size $n$ sample. We can then use this resampled data $x^* =(x\_{1, b}^*, x\_{2, b}^*, \dots, x\_{n, b}^*)$ to generate a bootstrap replicate of our statistic $\hat{\theta}\_n^*=t(x^*)$. If we generate $B$ such bootstrap replicates then, by the law of large numbers, the sample mean of these will converge to the expected value of our statistic under $\hat{F}\_n$.
 
 $$\frac{1}{B}\sum^B_{b=1}g(\theta^*_{n, b})\rightarrow\mathbb{E}_{\hat{F}_n}(g(\hat{\theta}))$$
 
@@ -104,7 +104,7 @@ However, as has been stressed, we cannot directly calculate the distribution $G$
 
 $$R^*_{n, b}=\theta^*_{n, b}-\hat{\theta}_n$$
 
-And then get the $\frac{\alpha}{2}$ and $1 - \frac{\alpha}{2}$ quantiles. Furthermore, we can simplify the form of this confidence interval purely in terms of our bootstrap resamples quantiles. Notice that $R^\*\_{n, b}$ is monotonically increasing in $\theta^\*\_{n, b}$, which means that the estimated quantiles of the pivot $\hat{H}^{-1}(\beta)$ are related to estimated quantiles of the statistic $\hat{G}^{-1}(\beta)$ via
+And then get the $\frac{\alpha}{2}$ and $1 - \frac{\alpha}{2}$ quantiles. Furthermore, we can simplify the form of this confidence interval purely in terms of our bootstrap resamples quantiles. Notice that $R^*\_{n, b}$ is monotonically increasing in $\theta^*\_{n, b}$, which means that the estimated quantiles of the pivot $\hat{H}^{-1}(\beta)$ are related to estimated quantiles of the statistic $\hat{G}^{-1}(\beta)$ via
 
 $$\hat{H}^{-1}(\beta) = \hat{G}^{-1}(\beta)-\hat{\theta}_n$$
 

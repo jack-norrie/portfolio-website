@@ -45,7 +45,7 @@ $$w^{(t)} = w^{(t-1)} - \eta \nabla L(w^{(t-1)})$$
 
 ## Convergence of Gradient Descent
 
-Suppose our current parameter value $w$ is close to a local minimum $w^\*$. Then we can consider our parameter vector to be some perturbation $\delta w$ about the local minimum, i.e $w = w^\* + \delta w$. Assuming second order continuity of our loss function, we can now use a Taylor expansion about our local minimum as follows:
+Suppose our current parameter value $w$ is close to a local minimum $w^*$. Then we can consider our parameter vector to be some perturbation $\delta w$ about the local minimum, i.e $w = w^* + \delta w$. Assuming second order continuity of our loss function, we can now use a Taylor expansion about our local minimum as follows:
 
 $$L(w^*+\delta w) = L(w^*) + \delta w^T \nabla L(w^*) + \frac{1}{2}\delta w^T H(w^*) \delta w + O(\delta w^3)$$
 
@@ -107,7 +107,7 @@ Therefore, given that convergence requires all eigen-componenets to converge, it
 
 $$R = \max(\|r(\lambda\_{max})\|, \|r(\lambda\_{min})\|)$$
 
-To find the optimal value of $\eta$ lets consider how this expression changes as we vary $\eta$. For small $\eta$ both quantities are positive, so we start with $R=\|r(\lambda\_{min})\|$. As we increase $\eta$ there is some point at which $r(\lambda\_{max})$ hits zero, further increases of $\eta$ will cause $\|r(\lambda\_{max})\|$ to increase (not decrease). We now have a situation where $r(\lambda\_{max})$ has a positive and larger magnitude gradient than $r(\lambda\_{min})$. Therefore, at some point between $-1 < r(\lambda\_{max}) < 0$, the two rates will intersect, i.e. $\|r(\lambda\_{min})\| = \|r(\lambda\_{max})\|$. This intersection point $\eta^\*$ will represent the minimum value for $R$, since prior to this point $\|r(\lambda\_{min})\|$ was the rate setter, meaning that $R$ was monotonically decreasing for $\eta < \eta^\*$. Meanwhile, after this intersection point $\|r(\lambda\_{max})\|$ will be the rate setter, meaning that $R$ will monotonically increase for $\eta \geq \eta^\*$. Importantly, this means that it is not only permissible for the maximum eigenvalue component to oscilate, it is desirable for optimal convergence.
+To find the optimal value of $\eta$ lets consider how this expression changes as we vary $\eta$. For small $\eta$ both quantities are positive, so we start with $R=\|r(\lambda\_{min})\|$. As we increase $\eta$ there is some point at which $r(\lambda\_{max})$ hits zero, further increases of $\eta$ will cause $\|r(\lambda\_{max})\|$ to increase (not decrease). We now have a situation where $r(\lambda\_{max})$ has a positive and larger magnitude gradient than $r(\lambda\_{min})$. Therefore, at some point between $-1 < r(\lambda\_{max}) < 0$, the two rates will intersect, i.e. $\|r(\lambda\_{min})\| = \|r(\lambda\_{max})\|$. This intersection point $\eta^*$ will represent the minimum value for $R$, since prior to this point $\|r(\lambda\_{min})\|$ was the rate setter, meaning that $R$ was monotonically decreasing for $\eta < \eta^*$. Meanwhile, after this intersection point $\|r(\lambda\_{max})\|$ will be the rate setter, meaning that $R$ will monotonically increase for $\eta \geq \eta^*$. Importantly, this means that it is not only permissible for the maximum eigenvalue component to oscilate, it is desirable for optimal convergence.
 
 To find this intersection point we observe that it will occur for $-1 < r(\lambda\_{max}) < 0$ and $0 < r(\lambda\_{min}) < 1$, meaning that we are solving for $\eta$ in the following equation:
 
@@ -123,7 +123,7 @@ $$R = \frac{\lambda_{max}-\lambda_{min}}{\lambda_{max}+\lambda_{min}} = \frac{\f
 
 Where we have identified the conditioning number $\kappa(H)$ of our hessian $H$, which is equal to the ratio of our largest eigenvalue to our lowest eigenvalue.
 
-As a concrete example, consider $\lambda_{\min}=1$ and $\lambda_{\max}=5$. Looking at a plot of $\|r(\lambda_{min})\|$, $\|r(\lambda_{max})\|$ and $R$ against $\eta$, we see that $\eta^\* = \frac{2}{5+1}=\frac{1}{3}$ and $R=\frac{5-1}{5+1}=\frac{2}{3}$ are indeed the optimal values for $\eta$ and the associated overall rate $R$ of convergence.
+As a concrete example, consider $\lambda_{\min}=1$ and $\lambda_{\max}=5$. Looking at a plot of $\|r(\lambda_{min})\|$, $\|r(\lambda_{max})\|$ and $R$ against $\eta$, we see that $\eta^* = \frac{2}{5+1}=\frac{1}{3}$ and $R=\frac{5-1}{5+1}=\frac{2}{3}$ are indeed the optimal values for $\eta$ and the associated overall rate $R$ of convergence.
 
 ![overall_convergence](/images/overall_convergence.png)
 
@@ -155,7 +155,7 @@ Which means that a value $0.9$ corresponds to allowing the gradient updates for 
 
 > From a physics perspective we could compare $1-\beta$ to a drag/friction term, in which case the above calculation would be analogous to a terminal velocity calculation.
 
-We can now apply a similar sort of analysis to our maximum eigenvalue component. We notice that for an ill-conditioned problem we have $\eta^\* \approx \eta_{max}$. Therefore, as an approximation for the effects of momentum on the maximum eigenvalue component case, we will consider the limiting case of pure oscillation. In this case we have
+We can now apply a similar sort of analysis to our maximum eigenvalue component. We notice that for an ill-conditioned problem we have $\eta^* \approx \eta_{max}$. Therefore, as an approximation for the effects of momentum on the maximum eigenvalue component case, we will consider the limiting case of pure oscillation. In this case we have
 
 $$\hat{u}_{max}^T\nabla L(w^{(t)})\approx (-1)^tg_{max}$$
 
@@ -310,7 +310,7 @@ First, I used SGD with a learning rate of $1.01 \eta_{max} = 1.01\times \frac{2}
 
 ### SGD
 
-Next, I used SGD with a learning rate of $\eta^\* = \frac{2}{\lambda_{min}+\lambda_{max}}$, this converged after 420 iterations.
+Next, I used SGD with a learning rate of $\eta^* = \frac{2}{\lambda_{min}+\lambda_{max}}$, this converged after 420 iterations.
 
 ![sgd](/images/sgd.png)
 
