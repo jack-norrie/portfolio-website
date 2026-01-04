@@ -82,3 +82,11 @@ mjx-container[display="true"] {
 .MJX-TEX {
   font-size: 1.1em;
 }
+
+/* Prevent math overflow on mobile */
+@media (max-width: 768px) {
+  mjx-container[display="true"] {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+}
