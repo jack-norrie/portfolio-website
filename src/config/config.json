@@ -4,7 +4,7 @@
     "base_url": "https://jack-norrie.github.io",
     "base_path": "/",
     "trailing_slash": false,
-    "favicon": "/images/favicon.png",
+    "favicon": "/favicon/favicon.ico",
     "logo": "",
     "logo_darkmode": "",
     "logo_width": "150",
