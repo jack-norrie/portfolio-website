@@ -30,7 +30,7 @@
     "copyright": "© 2025 Jack Norrie. All rights reserved."
   },
   "navigation_button": {
-    "enable": true,
+    "enable": false,
     "label": "GitHub",
     "link": "https://github.com/jack-norrie"
   },
