@@ -137,6 +137,16 @@ const { title, description, author, categories, image, date, tags } = post.data;
        import tocbot from 'tocbot';
        import 'tocbot/dist/tocbot.css';
 
+       function closeTocPanel() {
+         const tocPanel = document.getElementById('mobile-toc-panel');
+         const tocOverlay = document.getElementById('toc-overlay');
+         if (tocPanel && tocOverlay) {
+           tocPanel.classList.add('translate-x-full');
+           tocOverlay.classList.add('hidden');
+           document.body.style.overflow = '';
+         }
+       }
+
        function initToc() {
          // Destroy any existing instances first
          tocbot.destroy();
@@ -165,6 +175,16 @@ const { title, description, author, categories, image, date, tags } = post.data;
                ...commonConfig,
                tocSelector: '#toc-mobile',
              });
+             
+             // Add click handlers to mobile ToC links after they're created
+             setTimeout(() => {
+               const tocLinks = document.querySelectorAll('#toc-mobile a');
+               tocLinks.forEach(link => {
+                 link.addEventListener('click', () => {
+                   setTimeout(closeTocPanel, 300);
+                 });
+               });
+             }, 100);
            }
          });
        }
@@ -185,23 +205,9 @@ const { title, description, author, categories, image, date, tags } = post.data;
            }
          }
 
-         function closeToc() {
-           if (tocPanel && tocOverlay) {
-             tocPanel.classList.add('translate-x-full');
-             tocOverlay.classList.add('hidden');
-             document.body.style.overflow = '';
-           }
-         }
-
          mobileBtn.addEventListener('click', openToc);
-         closeBtn.addEventListener('click', closeToc);
-         tocOverlay.addEventListener('click', closeToc);
-
-         // Close ToC when clicking on a link
-         const tocLinks = document.querySelectorAll('#toc-mobile a');
-         tocLinks.forEach(link => {
-           link.addEventListener('click', closeToc);
-         });
+         closeBtn.addEventListener('click', closeTocPanel);
+         tocOverlay.addEventListener('click', closeTocPanel);
        }
 
        // Initialize on page load
