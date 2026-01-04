@@ -163,6 +163,12 @@ const { title, description, author, categories, image, date, tags } = post.data;
          });
        }
 
+       // Get actual header height dynamically
+       function getHeaderHeight() {
+         const header = document.querySelector('.header') as HTMLElement;
+         return header ? header.offsetHeight + 20 : 100; // Add 20px buffer, fallback to 100
+       }
+
        function closeTocPanel() {
          const tocPanel = document.getElementById('mobile-toc-panel');
          const tocOverlay = document.getElementById('toc-overlay');
@@ -173,23 +179,45 @@ const { title, description, author, categories, image, date, tags } = post.data;
          }
        }
 
+       // Check if MathJax has finished rendering
+       function isMathJaxReady() {
+         const contentDiv = document.querySelector('.content');
+         if (!contentDiv) return true; // No content, proceed
+         
+         // Count expected math blocks (rough heuristic)
+         const contentHTML = contentDiv.innerHTML;
+         const displayMathCount = (contentHTML.match(/\$\$/g) || []).length / 2; // Divided by 2 since $$ appears twice per block
+         const inlineMathCount = (contentHTML.match(/\\\(|\\\)/g) || []).length / 2;
+         const expectedMathElements = Math.floor(displayMathCount + inlineMathCount);
+         
+         // Count rendered MathJax containers
+         const renderedMath = contentDiv.querySelectorAll('mjx-container').length;
+         
+         // Consider ready if we have most of the expected math rendered (80% threshold)
+         return expectedMathElements === 0 || renderedMath >= expectedMathElements * 0.8;
+       }
+
        function initToc() {
          // Destroy any existing instances first
          tocbot.destroy();
 
-         const commonConfig = {
-           contentSelector: '.content',
-           headingSelector: 'h2, h3',
-           scrollSmooth: true,
-           scrollSmoothDuration: 200,
-           headingsOffset: 140,
-           scrollSmoothOffset: -140,
-           throttleTimeout: 200,
-         };
+         const scrollSmoothDuration = 200;
+         
+         // Function to actually initialize tocbot with dynamic header height
+         function performInit() {
+           const headerHeight = getHeaderHeight();
+           
+           const commonConfig = {
+             contentSelector: '.content',
+             headingSelector: 'h2, h3',
+             scrollSmooth: true,
+             scrollSmoothDuration: scrollSmoothDuration,
+             headingsOffset: headerHeight,
+             scrollSmoothOffset: -headerHeight,
+             throttleTimeout: 200,
+           };
 
-         // Wait a bit for content to be fully rendered
-         requestAnimationFrame(() => {
-           // Initialize desktop ToC
+           // Initialize desktop or mobile ToC
            if (window.innerWidth >= 1024) {
              tocbot.init({
                ...commonConfig,
@@ -207,12 +235,28 @@ const { title, description, author, categories, image, date, tags } = post.data;
                const tocLinks = document.querySelectorAll('#toc-mobile a');
                tocLinks.forEach(link => {
                  link.addEventListener('click', () => {
-                   setTimeout(closeTocPanel, 300);
+                   // Re-enable body scroll immediately for navigation
+                   document.body.style.overflow = '';
+                   // Close panel after scroll completes
+                   setTimeout(closeTocPanel, scrollSmoothDuration + 100);
                  });
                });
              }, 100);
            }
-         });
+         }
+
+         // Wait for MathJax to finish rendering before initializing ToC
+         let attempts = 0;
+         const maxAttempts = 20; // 2 seconds max wait (20 * 100ms)
+         
+         const checkMathJaxReady = setInterval(() => {
+           attempts++;
+           
+           if (isMathJaxReady() || attempts >= maxAttempts) {
+             clearInterval(checkMathJaxReady);
+             requestAnimationFrame(performInit);
+           }
+         }, 100);
        }
 
        function initTocToggle() {
@@ -235,6 +279,22 @@ const { title, description, author, categories, image, date, tags } = post.data;
          closeBtn.addEventListener('click', closeTocPanel);
          tocOverlay.addEventListener('click', closeTocPanel);
        }
+
+       // Handle hash navigation (browser back/forward, direct URLs)
+       function handleHashNavigation() {
+         const hash = window.location.hash;
+         if (hash) {
+           const target = document.querySelector(hash) as HTMLElement;
+           if (target) {
+             const headerHeight = getHeaderHeight();
+             const offsetTop = target.offsetTop - headerHeight;
+             window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+           }
+         }
+       }
+
+       // Listen for hash changes
+       window.addEventListener('hashchange', handleHashNavigation);
 
         // Initialize on page load
         initToc();
