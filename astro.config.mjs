@@ -45,8 +45,8 @@ export default defineConfig({
     rehypePlugins: [rehypeMathjax],
     shikiConfig: {
       themes: {
-        light: "catppuccin-latte",
-        dark: "catppuccin-mocha",
+        light: "github-light",
+        dark: "github-dark-default",
       },
       wrap: true,
     },

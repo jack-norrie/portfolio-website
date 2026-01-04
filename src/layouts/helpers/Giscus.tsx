@@ -35,15 +35,8 @@ const GiscusComments = ({ className }: { className?: string }) => {
     return () => observer.disconnect();
   }, []);
 
-  if (!giscus.enable) {
-    return null;
-  }
-
-  // Use Catppuccin themes that match the site theme
-  const giscusTheme =
-    theme === "dark"
-      ? "https://giscus.catppuccin.com/themes/mocha.css"
-      : "https://giscus.catppuccin.com/themes/latte.css";
+  // Use GitHub Dark themes that match the site theme
+  const giscusTheme = theme === "dark" ? "dark" : "light";
 
   return (
     <div className={className}>

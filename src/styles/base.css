@@ -54,10 +54,15 @@ code {
   @apply after:border-none;
 }
 
-/* Shiki dual theme support for Catppuccin */
+/* Shiki dual theme support - add border for light mode visibility */
+pre.astro-code {
+  border: 1px solid #e1e4e8;
+}
+
 .dark pre.astro-code {
   background-color: var(--shiki-dark-bg) !important;
   color: var(--shiki-dark) !important;
+  border-color: #30363d;
 }
 
 .dark pre.astro-code span {
