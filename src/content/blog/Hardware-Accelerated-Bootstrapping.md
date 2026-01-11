@@ -3,7 +3,7 @@ title: "Hardware Accelerated Bootstrapping"
 meta_title: ""
 description: ""
 date: 2025-04-12T00:00:00Z
-image: "/images/Hardware-Accelerated-Bootstrapping.png"
+# image: "/images/Hardware-Accelerated-Bootstrapping.png"
 author: "Jack Norrie"
 categories: ["statistics"]
 tags: ["statistics", "bootstrap", "python"]
