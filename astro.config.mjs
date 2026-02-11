@@ -27,21 +27,70 @@ const remarkPublicAssets = () => (tree) => {
   });
 };
 
-const remarkStripExcalidraw = () => (tree) => {
+const remarkObsidianEmbeds = () => (tree) => {
   visit(tree, "paragraph", (node, index, parent) => {
     if (!parent || typeof index !== "number") {
       return;
     }
 
-    const text = node.children
-      ?.map((child) => (typeof child.value === "string" ? child.value : ""))
-      .join("")
-      .trim();
+    if (
+      !node.children ||
+      node.children.some((child) => child.type !== "text")
+    ) {
+      return;
+    }
 
-    if (text && /!\[\[.*\.excalidraw\]\]/.test(text)) {
+    const text = node.children
+      .map((child) => (typeof child.value === "string" ? child.value : ""))
+      .join("");
+
+    const embedRegex = /!\[\[(.+?)\]\]/g;
+    if (!embedRegex.test(text)) {
+      return;
+    }
+
+    embedRegex.lastIndex = 0;
+    const newChildren = [];
+    let lastIndex = 0;
+    let match = embedRegex.exec(text);
+
+    while (match) {
+      const [raw, url] = match;
+      const matchIndex = match.index;
+
+      const before = text.slice(lastIndex, matchIndex);
+      if (before) {
+        newChildren.push({ type: "text", value: before });
+      }
+
+      if (!/\.excalidraw$/i.test(url)) {
+        const filename = url.split("/").pop() ?? url;
+        const alt = filename.replace(/\.[^/.]+$/, "");
+        newChildren.push({ type: "image", url, alt, title: null });
+      }
+
+      lastIndex = matchIndex + raw.length;
+      match = embedRegex.exec(text);
+    }
+
+    const after = text.slice(lastIndex);
+    if (after) {
+      newChildren.push({ type: "text", value: after });
+    }
+
+    const hasNonWhitespace = newChildren.some((child) => {
+      if (child.type !== "text") {
+        return true;
+      }
+      return typeof child.value === "string" && child.value.trim() !== "";
+    });
+
+    if (!hasNonWhitespace) {
       parent.children.splice(index, 1);
       return [index, 0];
     }
+
+    node.children = newChildren;
   });
 };
 
@@ -74,7 +123,7 @@ export default defineConfig({
       [remarkCollapse, { test: "Table of contents" }],
       remarkMath,
       remarkObsidianCallout,
-      remarkStripExcalidraw,
+      remarkObsidianEmbeds,
       remarkPublicAssets,
     ],
     rehypePlugins: [rehypeMathjax],

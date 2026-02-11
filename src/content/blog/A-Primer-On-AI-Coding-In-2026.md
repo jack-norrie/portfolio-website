@@ -21,7 +21,7 @@ Things started to change with the advent of Cursor, which moved these chat inter
 At this point I had reached the "trough of disillusionment" of the AI-Coding hype cycle, these tools had been relegated to the realm of advanced auto-complete and project exploration. I had heard about tools like Claude Code in early 2025, but I did not so eagerly adopt it this time, after having been disappointed over time with previous AI coding tools. This changed in August 2025 when I saw a video of someone using OpenCode, an open source alternative to ClaudeCode, in a [tmux](https://github.com/tmux/tmux) setup very similar to my own. This immediately drew my attention. OpenCode added many features which were missing from my previous workflows. One of the most useful features at the time was that it allowed you to quickly switch between a "plan-mode" (no edits) and a "build-mode" (edits), a feature which is now commonplace among the popular CLI AI-coding tools.
 
 ![[AI-Coding-Primer 2026-02-11 15.18.42.excalidraw]]
-![[public/images/ai-coding-hype-cycle.png]]
+![[/public/images/ai-coding-hype-cycle.png]]
 
 I am a big proponent of the Unix philosophy, i.e. using tools that "do one thing and do it well". Hence, I found this setup of a specialised Code Editor (Neovim) + specialised AI-Coding tool (OpenCode) preferable to trying to turn my NeoVim setup into a Swiss Army knife, that ultimately ends up being suboptimal in each of its respective sub-functions. Additionally, designing workflows using specialised tools enables you to adapt your workflows with more ease. For example, as AI-coding tools kept improving, I was finding that I could request larger features from these coding tools and trust them to produce reasonable outputs. Naturally, my workflow shifted from editing AI-outputs to reviewing AI-outputs. However, I was able to quickly adapt to this shift by becoming proficient with LazyGit, which I have found an excellent addition to my current Generate (OpenCode) - Review (LazyGit) - Edit (NeoVim) stack. Indeed, I believe the current popularity of AI-Coding CLIs is a phase, many developers find the CLI intimidating, and therefore the barrier for entry for these tools is too high for mass adoption. I believe the next wave of successful mainstream AI-Coding IDEs are going to be IDEs which refine the UX for the "Generate" and "Review" component of the above workflow, with the "Edit" functionality being of secondary importance. This being in contrast to Cursor, which in my opinion, is an "Edit" focussed IDE.
 
@@ -151,7 +151,7 @@ You might argue that the above scarcity mindset around context window usage is a
 If we are to optimise the size of our context window it is worthwhile diving into the anatomy of a typical context window. Typically an AI-Coding session will involve the agent being initialised with some system prompt followed by an agent specific prompt. Then a user prompt will be used, which could then make references to parts of the codebase, which will then be loaded by the agent into context. Next, the agent will have a discussion with the user to formulate an implementation plan. After confirming the plan the agent will iteratively use tools to solve the task at hand, before finally summarising their work. Your objective as a context engineer is to ensure that this summarisation is done before a point of significant performance degradation, the region after this point is referred to by many practitioners as the model's "dumb zone".
 
 ![[AI-Coding-Primer 2026-02-11 15.35.30.excalidraw]]
-![[public/images/prompt-anatomy.png]]
+![[/public/images/prompt-anatomy.png]]
 
 > [!TIP] Analogy
 > You need to think about your context window as a scarce resource. Indeed, a 200k token context window corresponds to a similar amount of space as the memory available on a commodore 64. Therefore, similarly to how games programmers of that era were meticulously crafting memory optimised code, you too must optimise the usage of your context window. [5]
@@ -206,12 +206,12 @@ Primary agents are the agents that users directly interface with.
 Sub-agents are agents that primary agents interface with, this is a useful tool for your primary agent since it allows the primary agent to delegate work. Importantly, sub-agents get their own isolated context window. This gives the sub-agent a space for intermediate context, i.e. thinking and tool calling. Then, once a sub-agent has completed its task, it returns only a high level summary of the result back to the primary agent. This helps maintain a high signal-to-noise ratio in the primary agent's context window, ensuring that the primary agent does not enter the "dumb zone". With this in mind, I believe that defining agents as specialists at a specific task is a much better idea than the conventional approach of defining agents as a specialised job role, i.e. prefer "Planner", "Builder", "Tester" over "Software Engineer".
 
 ![[AI-Coding-Primer 2026-02-11 15.42.17.excalidraw]]
-![[public/images/sub-agents.png]]
+![[/public/images/sub-agents.png]]
 
 Additionally, sub-agents open up the possibility for parallelised workflows, where an orchestrating agent can simultaneously delegate multiple subtasks to sub-agents running in parallel.
 
 ![[AI-Coding-Primer 2026-02-11 15.52.26.excalidraw]]
-![[public/images/sub-agent-orchestration.png]]
+![[/public/images/sub-agent-orchestration.png]]
 
 ### Model Context Protocol (MCP) Servers
 
@@ -241,7 +241,7 @@ Hooks let you interrupt your coding harness to execute code whenever some specif
 
 Harness Engineering is currently at the cutting edge of AI-coding, it refers to the practice of building workflows and automations on top of harnesses. The simplest example of such a workflow is a Ralph Loop. The idea behind this is to run your harness in a while loop, at the start of each iteration it references a `prd.json` (product requirements document) detailing a list of features. Each feature will have a description, validation criteria and a status. The harness then instructs an agent to select exactly one feature to work on based on this document. Once it completes its selected feature it will change the status of the feature in the `prd.json` document. Then it will update a `progress.md` file with any artefacts/discoveries it wants to leave future iterations of the loop.
 
-> [!info] Harness Engineering as a Name
+> [!note] Harness Engineering as a Name
 > I first came across this term in an interview with Geoffrey Huntley, the creator of the "Ralph Loop", where he jokingly pleaded with the interview not to refer to this practice as Harness Engineering [5]. Nonetheless, I am going to go against the creators wishes and refer to this practice as such. I think names are important, and I think terms like "vibe coding" have significantly impeded software engineers from adopting agentic coding. These are serious professionals, many with large egos. If we want AI-coding to be taken seriously we need to approach the naming of concepts within it with equal sincerity.
 
 The following is an adapted implementation of a Ralph Loop [7], which makes reference to the previously defined agent/harness definitions in the background section:
