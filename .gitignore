@@ -31,3 +31,5 @@ package-lock.json
 .idea/
 
 .obsidian
+
+artifacts

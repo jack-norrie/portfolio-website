@@ -1,0 +1,5 @@
+{
+  "event": "agent.stop",
+  "command": "./hooks/agent-complete.sh",
+  "description": "Ring a bell when the agent completes"
+}
