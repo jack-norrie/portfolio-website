@@ -102,7 +102,7 @@ The previous analyses gave us expressions for the variances of the post-activati
 $$\mathbb{V}\left(\frac{\partial E}{\partial W^{(l)}_{ij}}\right) = \left(\prod_{l'=1}^{l-1} f_{in}^{(l')}\mathbb{V}(w^{(l')})\right)  \left(\prod_{l'=l+1}^L f_{out}^{(l')}\mathbb{V}(w^{(l')})\right)\mathbb{V}\left(x\right)\mathbb{V}\left(\frac{\partial E}{\partial a^{(L)}_j}\right)$$
 
 > I believe this actually deviates slightly from the equation given by Glorot et al., which includes the variances for the weights of every layer in the network, including layer $l$. I believe they made a mistake when moving from equation (2) to equation (6) in their [paper](https://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf). Equation (2) would indicate, that after assuming a linear regime, $l+1$ terms are the smallest terms that can appear, further expansions only lead to larger layer terms. Intuitively this makes sense, when we draw the compute graph, the current layer cannot contribute any "compounding factors", i.e. $f_{out}^{(l)}\mathbb{v}(w^{(l)})$ does not belong in the above equation.
-> ![gradient_instability_graph](/images/gradient_instability_graph.png)
+> ![gradient_instability_graph](/public/images/gradient_instability_graph.png)
 
 Now if we want our gradients to be stable, which is of key interest for the vanishing/exploding gradients problem, then we need:
 
@@ -289,7 +289,7 @@ def glorot_uniform_init(m: nn.Module):
             nn.init.zeros_(m.bias)
 ```
 
-![shallow_experiments](/images/shallow_experiments.png)
+![shallow_experiments](/public/images/shallow_experiments.png)
 
 The naive initialisation led to gradient variances that span several orders of magnitude, while both LeCun and Glorot initialisation manage to maintain a consistent gradient variance. Furthermore, the naive post-activation variance converged to 1, which indicates that all the neurons saturated.
 
@@ -297,7 +297,7 @@ The naive initialisation led to gradient variances that span several orders of m
 
 The previous analysis failed to show Glorot as superior to LeCun. I decided to repeat the analysis with 100 layers to see if Glorot helps train deeper saturating networks compared to LeCun.
 
-![deep_tanh_experiments](/images/deep_tanh_experiments.png)
+![deep_tanh_experiments](/public/images/deep_tanh_experiments.png)
 
 Again, both Glorot and Lecun where able to stabilise the network.
 
@@ -305,7 +305,7 @@ Again, both Glorot and Lecun where able to stabilise the network.
 
 Next I swapped the activation function for a ReLU activation. The arguments from He et al. would imply that this should lead to instability across all previous strategies due to the dying ReLU problem.
 
-![deep_relu_experiments_bad_init](/images/deep_relu_experiments_bad_init.png)
+![deep_relu_experiments_bad_init](/public/images/deep_relu_experiments_bad_init.png)
 
 Indeed, the naive method suffered from exploding gradients, so much so that it overflows. Meanwhile LeCun and Glorot suffered from vanishing gradients, both approached the experiment's minimum value of $10^{-12}$ .
 
@@ -344,7 +344,7 @@ def he_compromise_uniform_init(m: nn.Module) -> None:
             nn.init.zeros_(m.bias)
 ```
 
-![deep_relu_experiments](/images/deep_relu_experiments.png)
+![deep_relu_experiments](/public/images/deep_relu_experiments.png)
 
 All 3 variations manged to stabilise the gradients and span around 3 orders of magnitude, which is exactly what is predicted by He et al. when having a $f_{in}^{(1)}=1000$ and $f_{out}^{(L)}=1$.
 

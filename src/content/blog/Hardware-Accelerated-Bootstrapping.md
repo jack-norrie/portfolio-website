@@ -3,7 +3,7 @@ title: "Hardware Accelerated Bootstrapping"
 meta_title: ""
 description: ""
 date: 2025-04-12T00:00:00Z
-# image: "/images/Hardware-Accelerated-Bootstrapping.png"
+# image: "/public/images/Hardware-Accelerated-Bootstrapping.png"
 author: "Jack Norrie"
 categories: ["statistics"]
 tags: ["statistics", "bootstrap", "python"]
@@ -163,7 +163,7 @@ As an end-to-end test for my different bootstrap confidence interval estimation 
         return jnp.mean(data)
 ```
 
-![bootstrap_adversarial](/images/bootstrap_simple.png)
+![bootstrap_adversarial](/public/images/bootstrap_simple.png)
 
 ## Complex Statistic
 
@@ -185,7 +185,7 @@ Next, I looked at a more complex statistic over a more complex distribution. Thi
         return jnp.mean(data) / (1 + jnp.median(data))
 ```
 
-![bootstrap_adversarial](/images/bootstrap_complex.png)
+![bootstrap_adversarial](/public/images/bootstrap_complex.png)
 
 ## Adversarial Percentile Setup
 
@@ -216,7 +216,7 @@ def resample(self, data: jax.Array, n_resamples: int = 2000, key: jax.Array = ra
     self._bootstrap_replicates = self._bootstrap_replicates + 2 * bias_factor
 ```
 
-![bootstrap_adversarial](/images/bootstrap_adversarial.png)
+![bootstrap_adversarial](/public/images/bootstrap_adversarial.png)
 
 ## No Free Lunch
 

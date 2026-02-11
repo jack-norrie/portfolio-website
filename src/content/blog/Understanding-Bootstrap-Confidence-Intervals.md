@@ -3,7 +3,7 @@ title: "Understanding Bootstrap Confidence Intervals"
 meta_title: ""
 description: ""
 date: 2025-04-06T00:00:00Z
-# image: "/images/Understanding-Bootstrap-Confidence-Intervals.png"
+# image: "/public/images/Understanding-Bootstrap-Confidence-Intervals.png"
 author: "Jack Norrie"
 categories: ["statistics"]
 tags: ["statistics", "bootstrap"]

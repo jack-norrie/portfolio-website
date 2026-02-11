@@ -82,7 +82,7 @@ For example, the compute graph for the following function:
 $$f(x, y) = 1 + x + \exp(\sin(xy))$$
 
 Is given by:
-![compute_graph](/images/backpropagation_compute.png)
+![compute_graph](/public/images/backpropagation_compute.png)
 
 We can manually derive the derivatives by using the rules of calculus:
 
@@ -94,7 +94,7 @@ However, if we actually break down our process of manually solving this derivati
 
 For example, the rules of symbolic differentiation applied to the original compute graph would result in the compute graph listed below. Here we have use $z'$ to denote the derivative of symbol $z$ with respect to some variable. For example if we wanted to use this compute graph to find $\frac{\partial}{\partial x}$ then $1'=0$, $x'=1$ and $y'=0$.
 
-![compute_graph_grad](/images/backpropagation_compute_grad.png)
+![compute_graph_grad](/public/images/backpropagation_compute_grad.png)
 
 The main disadvantage of this approach is that the complexity of the derivative compute graph is often much higher than the original compute graph, which stems from the branching caused by applications of the chain and product rule. Furthermore, this procedure does not efficiently reuse previous compute.
 
