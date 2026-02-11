@@ -1,7 +1,7 @@
 ---
 title: Jack Norrie
 email: jack.norrie.dev@gmail.com
-image: "/images/avatar.png"
+image: "/public/images/avatar.png"
 description: Senior Machine Learning Engineer specializing in developing sophisticated machine learning systems and deploying them at scale.
 social:
   - name: github

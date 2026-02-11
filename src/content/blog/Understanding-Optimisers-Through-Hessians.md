@@ -125,7 +125,7 @@ Where we have identified the conditioning number $\kappa(H)$ of our hessian $H$,
 
 As a concrete example, consider $\lambda_{\min}=1$ and $\lambda_{\max}=5$. Looking at a plot of $\|r(\lambda_{min})\|$, $\|r(\lambda_{max})\|$ and $R$ against $\eta$, we see that $\eta^* = \frac{2}{5+1}=\frac{1}{3}$ and $R=\frac{5-1}{5+1}=\frac{2}{3}$ are indeed the optimal values for $\eta$ and the associated overall rate $R$ of convergence.
 
-![overall_convergence](/images/overall_convergence.png)
+![overall_convergence](/public/images/overall_convergence.png)
 
 We notice that if we have a very large conditioning number, the associated overall rate of convergence will be very slow, i.e. $R \approx 1$. In fact, this could be so prohibatively slow as to completely stall convergence for practical purposes, under such circumstances we would say the optimisation problem is ill-conditioned. Although, such a scenario is more commonly referred to within the deep learning community as a steep valley problem, where the loss landscape is being compared to a valley with step sides (large $\lambda_{max}$) relative to a shallow gradient (small $\lambda_{min}$)orthogonal to the valley slopes.
 
@@ -306,25 +306,25 @@ def optimiser_experiment(
 
 First, I used SGD with a learning rate of $1.01 \eta_{max} = 1.01\times \frac{2}{\lambda_{max}}$, this led to training that diverged.
 
-![sgd_learning_rate_too_high](/images/sgd_learning_rate_too_high.png)
+![sgd_learning_rate_too_high](/public/images/sgd_learning_rate_too_high.png)
 
 ### SGD
 
 Next, I used SGD with a learning rate of $\eta^* = \frac{2}{\lambda_{min}+\lambda_{max}}$, this converged after 420 iterations.
 
-![sgd](/images/sgd.png)
+![sgd](/public/images/sgd.png)
 
 ### Momentum
 
 SGD with $\beta=0.9$ and $\eta=0.175 \eta^*$, was able to converge in 137 epochs.
 
-![momentum](/images/momentum.png)
+![momentum](/public/images/momentum.png)
 
 ### Adam
 
 Adam with a learning rate of $\eta=\eta^*$, $\beta_1 = 0.9$ and $\beta_2=0.999$ was able to converge in 117 epcohs.
 
-![adam](/images/adam.png)
+![adam](/public/images/adam.png)
 
 ## Recommendations
 

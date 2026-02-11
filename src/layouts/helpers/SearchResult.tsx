@@ -1,4 +1,8 @@
-import { plainify, titleify } from "@/lib/utils/textConverter";
+import {
+  normalizePublicPath,
+  plainify,
+  titleify,
+} from "@/lib/utils/textConverter";
 import React from "react";
 
 export interface ISearchItem {
@@ -146,7 +150,7 @@ const SearchResult = ({
                     {item.frontmatter.image && (
                       <div className="search-result-item-image">
                         <img
-                          src={item.frontmatter.image}
+                          src={normalizePublicPath(item.frontmatter.image)}
                           alt={item.frontmatter.title}
                         />
                       </div>

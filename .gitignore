@@ -29,3 +29,8 @@ package-lock.json
 
 # ide
 .idea/
+
+.obsidian
+
+artifacts
+Excalidraw

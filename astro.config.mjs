@@ -10,7 +10,40 @@ import remarkMath from "remark-math";
 import remarkObsidianCallout from "remark-obsidian-callout";
 import rehypeMathjax from "rehype-mathjax";
 import sharp from "sharp";
+import { visit } from "unist-util-visit";
 import config from "./src/config/config.json";
+
+const remarkPublicAssets = () => (tree) => {
+  visit(tree, ["image", "link"], (node) => {
+    if (!node.url || typeof node.url !== "string") {
+      return;
+    }
+
+    if (node.url.startsWith("/public/")) {
+      node.url = node.url.replace(/^\/public\//, "/");
+    } else if (node.url.startsWith("public/")) {
+      node.url = node.url.replace(/^public\//, "/");
+    }
+  });
+};
+
+const remarkStripExcalidraw = () => (tree) => {
+  visit(tree, "paragraph", (node, index, parent) => {
+    if (!parent || typeof index !== "number") {
+      return;
+    }
+
+    const text = node.children
+      ?.map((child) => (typeof child.value === "string" ? child.value : ""))
+      .join("")
+      .trim();
+
+    if (text && /!\[\[.*\.excalidraw\]\]/.test(text)) {
+      parent.children.splice(index, 1);
+      return [index, 0];
+    }
+  });
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -41,6 +74,8 @@ export default defineConfig({
       [remarkCollapse, { test: "Table of contents" }],
       remarkMath,
       remarkObsidianCallout,
+      remarkStripExcalidraw,
+      remarkPublicAssets,
     ],
     rehypePlugins: [rehypeMathjax],
     shikiConfig: {

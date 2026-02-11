@@ -31,6 +31,25 @@ export const titleify = (content: string) => {
     .join(" ");
 };
 
+export const normalizePublicPath = (assetPath?: string) => {
+  if (!assetPath) {
+    return assetPath;
+  }
+
+  let normalized = assetPath;
+  if (normalized.startsWith("/public/")) {
+    normalized = normalized.replace(/^\/public\//, "/");
+  } else if (normalized.startsWith("public/")) {
+    normalized = normalized.replace(/^public\//, "/");
+  }
+
+  if (!normalized.startsWith("/")) {
+    normalized = `/${normalized}`;
+  }
+
+  return normalized;
+};
+
 // plainify
 export const plainify = (content: string) => {
   const parseMarkdown: any = marked.parse(content);

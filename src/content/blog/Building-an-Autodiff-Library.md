@@ -21,7 +21,7 @@ Professionally, I now use a combination of PyTorch and JAX. From my experience, 
 
 My move away from TensorFlow was motivated by my dissatisfaction in the large amount of boiler plate that it forced, and what in my opinion were non-sensible defaults (e.g. requiring context managers to track gradients, rather than context mangers to not track gradients). I do not seem to be alone in this switch. Indeed, google trends would suggest that TensorFlow was the dominant framework when I started learning about deep learning, but has been greatly surpassed by PyTorch in recent years.
 
-![auto_diff_non_linear](/images/autodiff_tf_pt.png)
+![auto_diff_non_linear](/public/images/autodiff_tf_pt.png)
 
 Much of the strength of JAX lies in its Just In Time (JIT) compilation capabilities, which facilitate drastic performance improvements for frequently executed code. Development of such functionality is not of pedagogical interest for this project. I am not interested in building a high performance library, but rather deepening my intuition in automatic differentiation. Meanwhile, Pytorch's higher compatibility for dynamic compute graphs is of pedagogical interest. Therefore, PyTorch will be the primary source of inspiration for this library.
 
@@ -534,4 +534,4 @@ def non_linear_data_gen_experiment():
 
 The result of the fitting procedure is shown below. The fitted function (green) closely matches the true data generation process (orange).
 
-![auto_diff_non_linear](/images/autodiff_non_linear.png)
+![auto_diff_non_linear](/public/images/autodiff_non_linear.png)
