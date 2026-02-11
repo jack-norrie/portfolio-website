@@ -5,9 +5,9 @@ description: ""
 date: 2026-02-10T00:00:00Z
 author: Jack Norrie
 categories:
-  - machine-learning
-  - deep-learning
+  - software-engineering
 tags:
+  - software-engineering
   - ai-coding
 draft: false
 ---
