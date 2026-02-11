@@ -58,33 +58,33 @@ My interpretation of this definition is detailed in the following code:
 # agent.py
 
 def chat(model: Model, context: list[str]) -> list[str]:
-	while True:
-		response = model.generate(context)
-		context.append(response.content)
-		print(context[-1])
+ while True:
+  response = model.generate(context)
+  context.append(response.content)
+  print(context[-1])
 
-		if response.terminate:
-			return context
+  if response.terminate:
+   return context
 
-		for tool_call in response.tool_calls:
-			tool_result = execute_tool(tool_call)
-			context.append(tool_result)
+  for tool_call in response.tool_calls:
+   tool_result = execute_tool(tool_call)
+   context.append(tool_result)
 
 if __name__ == "__main__":
-	user_prompt = sys.argv[1]
-	model_name = sys.argv[2]
-	agent_name = sys.argv[3]
+ user_prompt = sys.argv[1]
+ model_name = sys.argv[2]
+ agent_name = sys.argv[3]
 
-	model = get_model(model_name)
-	system_prompt = model.get_system_prompt()
-	agent_prompt = get_agent_prompt(agent_name)
+ model = get_model(model_name)
+ system_prompt = model.get_system_prompt()
+ agent_prompt = get_agent_prompt(agent_name)
 
-	context = [system_prompt, agent_prompt, user_prompt]
-	while True:
-		context = chat(model, context)
+ context = [system_prompt, agent_prompt, user_prompt]
+ while True:
+  context = chat(model, context)
 
-		user_prompt = input()
-		context.append(user_prompt)
+  user_prompt = input()
+  context.append(user_prompt)
 ```
 
 > [!note]
