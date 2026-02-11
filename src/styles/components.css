@@ -114,6 +114,10 @@ blockquote[data-callout] {
   color: inherit;
 }
 
+blockquote[data-callout] p {
+  color: inherit;
+}
+
 /* callout types */
 blockquote[data-callout="note"] {
   @apply text-[#1B83E2];
