@@ -106,10 +106,12 @@ blockquote[data-callout] {
 
 .callout-content {
   @apply mt-0;
+  color: inherit;
 }
 
 .callout-content p {
-  @apply my-0 text-base text-text dark:text-darkmode-text;
+  @apply my-0 text-base;
+  color: inherit;
 }
 
 /* callout types */

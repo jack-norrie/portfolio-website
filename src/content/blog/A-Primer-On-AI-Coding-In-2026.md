@@ -242,7 +242,7 @@ Hooks let you interrupt your coding harness to execute code whenever some specif
 Harness Engineering is currently at the cutting edge of AI-coding, it refers to the practice of building workflows and automations on top of harnesses. The simplest example of such a workflow is a Ralph Loop. The idea behind this is to run your harness in a while loop, at the start of each iteration it references a `prd.json` (product requirements document) detailing a list of features. Each feature will have a description, validation criteria and a status. The harness then instructs an agent to select exactly one feature to work on based on this document. Once it completes its selected feature it will change the status of the feature in the `prd.json` document. Then it will update a `progress.md` file with any artefacts/discoveries it wants to leave future iterations of the loop.
 
 > [!note] Harness Engineering as a Name
-> I first came across this term in an interview with Geoffrey Huntley, the creator of the "Ralph Loop", where he jokingly pleaded with the interview not to refer to this practice as Harness Engineering [5]. Nonetheless, I am going to go against the creators wishes and refer to this practice as such. I think names are important, and I think terms like "vibe coding" have significantly impeded software engineers from adopting agentic coding. These are serious professionals, many with large egos. If we want AI-coding to be taken seriously we need to approach the naming of concepts within it with equal sincerity.
+> I first came across this term in an interview with Geoffrey Huntley, the creator of the "Ralph Loop", where he jokingly pleaded with the interview not to refer to this practice as Harness Engineering [5]. Nonetheless, I am going to go against the creator's wishes and refer to this practice as such. I think names are important, and I think terms like "vibe coding" have significantly impeded software engineers from adopting agentic coding. These are serious professionals, many with large egos. If we want AI-coding to be taken seriously we need to approach the naming of concepts within it with equal sincerity.
 
 The following is an adapted implementation of a Ralph Loop [7], which makes reference to the previously defined agent/harness definitions in the background section:
 
@@ -287,10 +287,10 @@ Geoffrey Huntley named the Ralph Loop after the Simpsons character Ralph Wiggum.
 
 ## References
 
-1. Willison S. I think “agent” may finally have a widely enough agreed upon definition to be useful jargon now [Internet]. Simon Willison’s Weblog. Available from: https://simonwillison.net/2025/Sep/18/agents/
-2. Be clear, direct, and detailed [Internet]. Claude API Docs. Available from: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct
+1. Willison S. I think “agent” may finally have a widely enough agreed upon definition to be useful jargon now [Internet]. Simon Willison’s Weblog. Available from: <https://simonwillison.net/2025/Sep/18/agents/>
+2. Be clear, direct, and detailed [Internet]. Claude API Docs. Available from: <https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct>
 3. Liu NF, Lin K, Hewitt J, Paranjape A, Bevilacqua M, Petroni F, Liang P. Lost in the middle: How language models use long contexts. Transactions of the association for computational linguistics. 2024;12:157-73.
-4. Hong K, Troynikov A, Huber J. Context rot: How increasing input tokens impacts llm performance. URL https://research. trychroma. com/context-rot, retrieved October. 2025 Jul;20:2025.
-5. Geoffrey Huntley. Ralph Wiggum (and why Claude Code’s implementation isn’t it) with Geoffrey Huntley and Dexter Horthy [Internet]. YouTube. 2026. Available from: https://www.youtube.com/watch?v=O2bBWDoxO4s
-6. IndyDevDan. Elite Context Engineering with Claude Code [Internet]. YouTube. 2025. Available from: https://www.youtube.com/watch?v=Kf5-HWJPTIE
-7. 11 Tips for AI Coding with Ralph Wiggum [Internet]. Available from: https://www.aihero.dev/tips-for-ai-coding-with-ralph-wiggum
+4. Hong K, Troynikov A, Huber J. Context rot: How increasing input tokens impacts llm performance. URL <https://research>. trychroma. com/context-rot, retrieved October. 2025 Jul;20:2025.
+5. Geoffrey Huntley. Ralph Wiggum (and why Claude Code’s implementation isn’t it) with Geoffrey Huntley and Dexter Horthy [Internet]. YouTube. 2026. Available from: <https://www.youtube.com/watch?v=O2bBWDoxO4s>
+6. IndyDevDan. Elite Context Engineering with Claude Code [Internet]. YouTube. 2025. Available from: <https://www.youtube.com/watch?v=Kf5-HWJPTIE>
+7. 11 Tips for AI Coding with Ralph Wiggum [Internet]. Available from: <https://www.aihero.dev/tips-for-ai-coding-with-ralph-wiggum>
