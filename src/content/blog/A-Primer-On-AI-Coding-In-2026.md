@@ -18,7 +18,7 @@ I have been using AI-coding tools for several years at this point. As is the cas
 
 Things started to change with the advent of Cursor, which moved these chat interfaces into your IDE. With the context of your projects, AI agents could suggest the exact changes which needed to occur in your project in order to meet your requirements. Compared to the previous paradigm, where you would have to translate the proposed changes into your codebase, this represented the potential for a true speed-up. Indeed, I readily adopted this paradigm into my workflow, adding plugins like [Avante](https://github.com/yetone/avante.nvim) and [Windsurf](https://github.com/Exafunction/windsurf.vim) to my NeoVim configuration to replicate this functionality. However, as time progressed I felt myself using these plugins less and less. I was finding that the time and effort invested into reviewing and modifying outweighed any potential speed benefit I might be gaining. It also simply was not an enjoyable experience, this type of workflow was still very synchronous, and the process felt akin to micromanaging a junior developer, having to eagerly course correct them as soon as you spotted them going down a bad path.
 
-At this point I had reached the "trough of disillusionment" of the AI-Coding hype cycle, these tools had been relegated to the realm of advanced auto-complete and project exploration. I had heard about tools like Claude Code in early 2025, but I did not so eagerly adopt it this time, after having been disappointed over time with previous AI coding tools. This changed in August 2025 when I saw a video of someone using OpenCode, an open source alternative to ClaudeCode, in a [tmux](https://github.com/tmux/tmux) setup very similar to my own. This immediately drew my attention. OpenCode added many features which were missing from my previous workflows. One of the most useful features at the time was that it allowed you to quickly switch between a "plan-mode" (no edits) and a "build-mode" (edits), a feature which is now commonplace among the popular CLI AI-coding tools.
+At this point I had reached the "trough of disillusionment" of the AI-Coding hype cycle, these tools had been relegated to the realm of advanced auto-complete and project exploration. I had heard about tools like Claude Code in early 2025, but I did not so eagerly adopt them this time. This changed in August 2025 when I saw a video of someone using OpenCode, an open source alternative to ClaudeCode, in a [tmux](https://github.com/tmux/tmux) setup very similar to my own. This immediately drew my attention. OpenCode added many features which were missing from my previous workflows. One of the most useful features at the time was that it allowed you to quickly switch between a "plan-mode" (no edits) and a "build-mode" (edits), a feature which is now commonplace among the popular CLI AI-coding tools.
 
 ![[AI-Coding-Primer 2026-02-11 15.18.42.excalidraw]]
 ![[/public/images/ai-coding-hype-cycle.png]]
@@ -41,7 +41,7 @@ For the sake of this article I will not be going into detail about how an LLM wo
 response = model.generate(context)
 ```
 
-#### Harness
+### Harness
 
 An LLM harness is a program that can be used to interface with an LLM, usually via API calls. Some examples of AI harnesses include OpenCode, Claude Code and OpenClaw.
 
@@ -125,13 +125,16 @@ All of the above information helps your agent craft a response that fits your re
 
 #### Definition
 
-Context Engineering can be seen as a successor to prompt engineering. Rather than solely focussing on the input to our agent, context engineering focusses on how to effectively utilise and populate the context window of an agent throughout its problem solving journey. In this sense prompt engineering is about effectively curating what context to present to your agent from a knowledge base of possible context. However, this then begs the question, when possible, why not load the entire available knowledge base into context?
+Context Engineering can be seen as a successor to prompt engineering. Rather than solely focussing on the input to our agent, context engineering focusses on how to effectively utilise and populate the context window of an agent throughout its problem solving journey. In this sense context engineering is about effectively curating what context to present to your agent from a knowledge base of possible context. However, this then begs the question, when possible, why not load the entire available knowledge base into context?
 
 #### Research
 
 The seminal paper "Lost in the Middle" (20/11/2023) [3] showed that LLMs have the highest retrieval performance, when using Needle In A Haystack (NIAH) benchmarks, at the start and end of their context windows. In other words, models have a primacy and recency bias. As well as advocating for proper engineering of the position of your information within your context window, the paper also highlighted the important trade-off of providing your language model with sufficient information to complete its downstream tasks, without adding too much information as to overwhelm its context. They showed that in a reader-retriever benchmark that reader performance saturates much faster than retriever performance, meaning that the reader gets diminishing returns as retrieval improves.
 
 A more recent technical report "Context Rot: How Increasing Input Tokens Impacts LLM Performance" (14/07/2025) [4] opens stating that frontier models are now flattening the performance curve for NIAH tasks, which has emboldened LLM providers to develop models with ever larger context windows. However, the article goes on to stress that NIAH are overly simplistic retrieval tasks. As such, the article investigates semantic NIAH tasks, i.e. tasks where the needle is semantically similar to the query rather than lexically similar. It found that although the positional performance u-curve had been flattened for such tasks, the performance as a functional of context length still showed drastic drop-offs with increasing context length. Additionally, this drop-off accelerated as query and needle semantic similarity decreased. Furthermore, it showed that primacy bias still existed in some experiments, such as the "repeated words" experiment. Finally, the article did extensive experiments on the role of "distractors" within the context, i.e. pieces of information that have semantic overlap with the objective, but do not actually answer the objective. The article found that distractors have a non-uniform impact on performance, i.e. cause more degradation in performance as the context grows.
+
+![[A-Primer-On-AI-Coding-In-2026 2026-02-12 11.45.19.excalidraw]]
+![[/public/images/niah-benchmarks-over-time.png]]
 
 ### Principles
 
@@ -144,7 +147,7 @@ I believe the newer context rot article is much more relevant to coding. Indeed,
 
 #### Context Window Scaling
 
-You might argue that the above scarcity mindset around context window usage is a short term problem, as time goes on we will surely get models that can handle effectively unlimited context windows. However, a core aspect of the transformer architecture is the attention mechanism. Fundamentally, this mechanism calculates the pairwise importance between all pairs of token embeddings. Therefore, barring a significant architectural change in state-of-the-art LLMs, the computational scaling with context size is $O(n^2). Additionally, even if the maximum context windows that models can handle does get larger, the research still very much indicates that if you can somehow convey the same information in a smaller context window, i.e. increase the signal-to-noise ratio, then you are going to get better results. Therefore I think learning how to engineer your context window effectively is going to be an important skill for the foreseeable future.
+You might argue that the above scarcity mindset around context window usage is a short term problem, as time goes on we will surely get models that can handle effectively unlimited context windows. However, a core aspect of the transformer architecture is the attention mechanism. Fundamentally, this mechanism calculates the pairwise importance between all pairs of token embeddings. Therefore, barring a significant architectural change in state-of-the-art LLMs, the computational scaling with context size is $O(n^2)$. Additionally, even if the maximum context windows that models can handle does get larger, the research still very much indicates that if you can somehow convey the same information in a smaller context window, i.e. increase the signal-to-noise ratio, then you are going to get better results. Therefore I think learning how to engineer your context window effectively is going to be an important skill for the foreseeable future.
 
 #### Context Window Anatomy
 
@@ -153,8 +156,8 @@ If we are to optimise the size of our context window it is worthwhile diving int
 ![[AI-Coding-Primer 2026-02-11 15.35.30.excalidraw]]
 ![[/public/images/prompt-anatomy.png]]
 
-> [!TIP] Analogy
-> You need to think about your context window as a scarce resource. Indeed, a 200k token context window corresponds to a similar amount of space as the memory available on a commodore 64. Therefore, similarly to how games programmers of that era were meticulously crafting memory optimised code, you too must optimise the usage of your context window. [5]
+> [!TIP] Context as a Scarce Resource
+> You need to think about your context window as a scarce resource. For reference, a 200k token context window corresponds to a similar amount of space as the memory available on a commodore 64. Therefore, similarly to how games programmers of that era were meticulously crafting memory optimised code, you too must optimise the usage of your context window. [5]
 
 #### Reduce and Delegate
 
@@ -182,7 +185,7 @@ Slash commands also offer an avenue for a context engineering reduction pattern.
 
 ### Skills
 
-Skills are a relatively new addition to the context engineering toolkit, in many ways they can be seen as a successor to the tools offered by MCP servers. They are reusable filesystem based resources which extend your agent's capabilities. They go beyond slash commands in the sense that they can utilise your agent's VM environment to execute scripts. Therefore, where a slash command might be configured via a single markdown file, a skill will usually be packaged as a directory, potentially containing many markdown files and scripts.
+Skills are a relatively new addition to the context engineering toolkit. They are reusable filesystem based resources which extend your agent's capabilities. They go beyond slash commands in the sense that they can utilise your agent's VM environment to execute scripts. Therefore, where a slash command might be configured via a single markdown file, a skill will usually be packaged as a directory, potentially containing many markdown files and scripts.
 
 One of the key principles of skills is that they operate under a progressive disclosure model. This means they attempt to achieve "Just-in-Time" context loading, i.e. only loading in context as and if it is needed. In practice this means that skills will be defined with some top level `<skill>/SKILL.md` file. This skill file will contain metadata (yaml frontmatter), instructions (markdown body) and might make reference to other resources in the skill directory. The progressive disclosure model then only loads in this data as follows:
 
@@ -191,7 +194,7 @@ One of the key principles of skills is that they operate under a progressive dis
 3. Resources - Additional resources, like markdown files and scripts, might be referenced in the instructions, the agent can decide whether to load these resources into context depending on its current task
 
 > [!TIP] Onboarding Document
-> Write skills the same way you would write an onboarding document for a new member of your team. When writing a skill you should run the litmus test: "Could a new member of my team achieve this goal given the information I have included in this skill?"
+> Write skills the same way you would write an onboarding document for a new member of your team. When writing a skill you should run the litmus test: "Could a new member of my team achieve use the information contained in these instructions to achieve the desired goal?"
 
 ### Agents
 
@@ -215,13 +218,13 @@ Additionally, sub-agents open up the possibility for parallelised workflows, whe
 
 ### Model Context Protocol (MCP) Servers
 
-Model Context Protocol is a client-server protocol designed specifically with LLMs in mind. Rather than having an agent have to learn the idiosyncrasies of many rest APIs, instead with MCP the agent can use a standardised interface. Indeed, many MCP servers act as wrappers around REST APIs. These standardised interfaces expose the following primitives to the LLM:
+Model Context Protocol is a client-server protocol designed specifically with LLMs in mind. Rather than having an agent have to learn the idiosyncrasies of many rest APIs, instead with MCP the agent can use a standardised interface. In fact, many MCP servers act as wrappers around REST APIs. These standardised interfaces expose the following primitives to the LLM:
 
 - Prompt Templates
 - Tools
 - Resources
 
-MCP was revolutionary when it first came out. However, as time has progressed, I believe better patterns have developed for the first two primitives. I don't believe prompt templates belong in a third party service, these are usually highly specific to individual projects and workflows, this primitives is much better served with slash commands. As with normal agent tools, MCP tools face the problem of schema bloat. Indeed, MCPs exacerbate this issue, since it is very easy to enable tens of MCP servers and rapidly bloat your initial context. I believe skills have emerged as a better pattern for extending a models capabilities, due to their progressive disclosure model. However, I do still believe that MCP servers offer value via their resources primitive, i.e. tools offer an effective method for connecting your agent to third party data sources, which can be used to dynamically fetch up to date data.
+MCP was revolutionary when it first came out. However, as time has progressed, I believe better patterns have developed for the first two primitives. I don't believe prompt templates belong in a third party service, these are usually highly specific to individual projects and workflows, this primitive is much better served by slash commands. As with normal agent tools, MCP tools face the problem of schema bloat. Indeed, MCPs exacerbate this issue, since it is very easy to enable tens of MCP servers and rapidly bloat your initial context. I believe skills have emerged as a better pattern for extending a models capabilities, due to their progressive disclosure model. However, I do still believe that MCP servers offer value via their resource primitive, i.e. they offer an effective method for connecting your agent to third party data sources, which can be used to dynamically fetch up to date data.
 
 ### Hooks
 
@@ -242,7 +245,7 @@ Hooks let you interrupt your coding harness to execute code whenever some specif
 Harness Engineering is currently at the cutting edge of AI-coding, it refers to the practice of building workflows and automations on top of harnesses. The simplest example of such a workflow is a Ralph Loop. The idea behind this is to run your harness in a while loop, at the start of each iteration it references a `prd.json` (product requirements document) detailing a list of features. Each feature will have a description, validation criteria and a status. The harness then instructs an agent to select exactly one feature to work on based on this document. Once it completes its selected feature it will change the status of the feature in the `prd.json` document. Then it will update a `progress.md` file with any artefacts/discoveries it wants to leave future iterations of the loop.
 
 > [!note] Harness Engineering as a Name
-> I first came across this term in an interview with Geoffrey Huntley, the creator of the "Ralph Loop", where he jokingly pleaded with the interview not to refer to this practice as Harness Engineering [5]. Nonetheless, I am going to go against the creator's wishes and refer to this practice as such. I think names are important, and I think terms like "vibe coding" have significantly impeded software engineers from adopting agentic coding. These are serious professionals, many with large egos. If we want AI-coding to be taken seriously we need to approach the naming of concepts within it with equal sincerity.
+> I first came across this term when watching an interview with Geoffrey Huntley, the creator of the "Ralph Loop", where he jokingly pleaded with the interview not to refer to this practice as Harness Engineering [5]. However, for lake of a better term I will be going against the creator's wishes.
 
 The following is an adapted implementation of a Ralph Loop [7], which makes reference to the previously defined agent/harness definitions in the background section:
 
