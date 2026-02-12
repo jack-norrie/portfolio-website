@@ -114,8 +114,17 @@ blockquote[data-callout] {
   color: inherit;
 }
 
+.callout-content p + p {
+  @apply mt-4;
+}
+
 blockquote[data-callout] p {
   color: inherit;
+}
+
+blockquote[data-callout] p::before,
+blockquote[data-callout] p::after {
+  content: none !important;
 }
 
 /* callout types */
