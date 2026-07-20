@@ -17,7 +17,9 @@ social:
     link: mailto:jack.norrie.dev@gmail.com
 ---
 
-Senior Machine Learning Engineer specialising in developing sophisticated machine learning systems and deploying them at scale. At Knauf Energy Solutions, I design and develop novel machine learning approaches while architecting production ML infrastructure on AWS, including microservices-based deployment pipelines and cloud-native MLOps systems.
+Software Engineer at Citadel, working within the Commodities Central Weather team on machine learning applied to weather and climate modelling for commodities trading.
+
+I specialise in developing sophisticated machine learning systems and deploying them at scale, with a background in designing novel ML approaches and architecting production ML infrastructure on AWS, including microservices-based deployment pipelines and cloud-native MLOps systems.
 
 My technical toolkit spans the full machine learning engineering spectrum: Python (Pandas, NumPy, scikit-learn), deep learning frameworks (PyTorch, JAX, TensorFlow), R (Tidyverse), big data technologies (Hadoop & Spark), SQL, Git for version control, Docker for containerisation, Terraform for Infrastructure as Code (IaC), Linux operating systems, and AWS cloud technologies (SageMaker, Glue, Athena, Step Functions, Lambda, Batch) for robust ML operations and deployment.
 
